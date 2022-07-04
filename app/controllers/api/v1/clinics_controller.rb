@@ -1,19 +1,17 @@
 class Api::V1::ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
 
-  # GET /clinics
   def index
     @clinics = Clinic.all.map { |clinic| [clinic, clinic.addresses.last]}
     
     render json: @clinics
   end
 
-  # GET /clinics/1
   def show
     render json: @clinic
   end
 
-  # POST /clinics
+  
   def create
     @clinic = Clinic.new(nome: params[:nome], cnpj: params[:cnpj])
 
@@ -48,7 +46,7 @@ class Api::V1::ClinicsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /clinics/1
+
   def update
     if @clinic.update(clinic_params)
       render json: @clinic
@@ -57,13 +55,13 @@ class Api::V1::ClinicsController < ApplicationController
     end
   end
 
-  # DELETE /clinics/1
+
   def destroy
     @clinic.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_clinic
       @clinic = Clinic.find(params[:id])
     end
@@ -72,7 +70,6 @@ class Api::V1::ClinicsController < ApplicationController
       @address = Address.find_by(clinic_id: params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def clinic_params
       params.require(:clinic).permit(:nome, :cnpj, :data, :address)
     end
